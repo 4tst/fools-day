@@ -11,7 +11,8 @@
       <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
         <image class="avatar" src="{{avatarUrl}}"></image>
       </button>
-      <input type="nickname" value='{{nickname}}' bindblur="onInputNickname" bindinput="onInputNickname" class="nickname" placeholder="输入或点击获取昵称"/>
+      <input type="nickname" model:value='{{nickname}}' class="nickname" placeholder="输入或点击获取昵称"/>
+      <button bindtap="confirmUserInfo">确定</button>
     </block>
     <block wx:else>
       <image bindtap="bindViewTap" class="avatar" src="{{avatarUrl}}" mode="cover"></image>
