@@ -8,6 +8,7 @@
     "compileType": "miniprogram",
     "projectname": "all in one",
     "setting": {
+        "lazyloadPlaceholderEnable": true,
         "useCompilerPlugins": [
             "typescript"
         ],
@@ -15,7 +16,8 @@
             "ignore": [],
             "disablePlugins": [],
             "outputPath": ""
-        }
+        },
+        "minified": true
     },
     "simulatorType": "wechat",
     "simulatorPluginLibVersion": {},
