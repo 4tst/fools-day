@@ -31,3 +31,20 @@
     color: red;
     font-weight: 100;
 }
+
+video{
+    border-radius: 5px;
+}
+
+.ghost{
+    width: 85%;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+.ghost-image{
+    border-radius: 6px;
+}
+.ghost-text{
+    color: green;
+}

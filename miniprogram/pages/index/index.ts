@@ -5,6 +5,9 @@ const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia0
 
 Page({
     data: {
+        countdownInterval:0,
+        countdown:30,
+        showGhost: false,
         userInfo: {},
         hasUserInfo: false,
         avatarUrl: wx.getStorageSync("avatarUrl") || defaultAvatarUrl,
@@ -63,6 +66,48 @@ Page({
         this.setData({
             hasUserInfo: this.hasUserInfo()
         })
+        this.setData({
+            showGhost: true
+        })
+        this.data.countdownInterval=setInterval(()=>{
+            let x=this.data.countdown-1
+            this.setData({
+                countdown:x>=0?x:30,
+            })
+        },1*1000)
+        setTimeout(() => {
+            this.setData({
+                countdown:30,
+            })
+            wx.showModal({
+                title: "哈哈哈",
+                content: "愚人节快乐！希望没有吓到你",
+                confirmText: "垃圾玩意",
+                cancelText: "吓死我了",
+                success: ({ confirm, cancel, content }) => {
+                    if (confirm) {
+                        wx.showToast({
+                            icon: "success",
+                            duration: 5 * 1000,
+                            title: "试试你胆小儿砸",
+                        })
+                    } 
+                    if(cancel) {
+                        wx.showToast({
+                            icon: "error",
+                            duration: 5 * 1000,
+                            title: "转发即转移害怕"
+                        })
+                    }
+                    return true
+                }
+            })
+        }, 23 * 1000)
+    },
+    onUnload(){
+        if(this.data.countdownInterval){
+            clearInterval(this.data.countdownInterval)
+        }
     },
     getUserProfile() {
         // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗

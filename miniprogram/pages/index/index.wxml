@@ -1,26 +1,35 @@
 <!--index.wxml-->
 <view class="container">
-  <view class="userinfo">
-    <block wx:if="{{canIUseOpenData}}">
-        <view class="avatar" bindtap="bindViewTap">
-            <open-data type="userAvatarUrl"></open-data>
+
+    <view class="userinfo">
+        <block wx:if="{{canIUseOpenData}}">
+            <view class="avatar" bindtap="bindViewTap">
+                <open-data type="userAvatarUrl"></open-data>
+            </view>
+            <open-data type="userNickName"></open-data>
+        </block>
+        <block wx:elif="{{!hasUserInfo}}">
+            <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+                <image class="avatar" src="{{avatarUrl}}"></image>
+            </button>
+            <input type="nickname" model:value='{{nickname}}' class="nickname" placeholder="输入或点击获取昵称" />
+            <button bindtap="confirmUserInfo">确定</button>
+        </block>
+        <block wx:else>
+            <image bindtap="bindViewTap" class="avatar" src="{{avatarUrl}}" mode="cover"></image>
+            <text class="nickname">{{nickname}}</text>
+        </block>
+    </view>
+    <view class='prompt' wx:if='{{!hasUserInfo}}'>
+        <text>由于微信限制，小程序无法直接获取用户信息，请点击头像和昵称手动获取
+        </text>
+    </view>
+    <view wx:else class='ghost'>
+        <image class="ghost-image" mode="aspectFit" src="../../assets/terrible.gif"></image>
+        <view class="ghost-text">
+        <text>考验视力的时候到了：图中隐藏了一个人，你能在<text style="color: red;">{{countdown}}s</text>之内找到吗？</text>
         </view>
-      <open-data type="userNickName"></open-data>
-    </block>
-    <block wx:elif="{{!hasUserInfo}}">
-      <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
-        <image class="avatar" src="{{avatarUrl}}"></image>
-      </button>
-      <input type="nickname" model:value='{{nickname}}' class="nickname" placeholder="输入或点击获取昵称"/>
-      <button bindtap="confirmUserInfo">确定</button>
-    </block>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="avatar" src="{{avatarUrl}}" mode="cover"></image>
-      <text class="nickname">{{nickname}}</text>
-    </block>
-  </view>
-  <view class='prompt' wx:if='{{!hasUserInfo}}'>
-    <text>由于微信限制，小程序无法直接获取用户信息，请点击头像和昵称手动获取
-    </text>
-  </view>
+    </view>
+    <!-- <video wx:else="" src="https://qcloudbbs-10019892.cos.ap-shanghai.myqcloud.com/Donald%20Duck.mp4" poster="http://a0.att.hudong.com/13/68/01300542392970143494689930378.jpg" controls></video> -->
+
 </view>
