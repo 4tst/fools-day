@@ -7,7 +7,6 @@ Page({
     data: {
         countdownInterval:0,
         countdown:30,
-        showGhost: false,
         userInfo: {},
         hasUserInfo: false,
         avatarUrl: wx.getStorageSync("avatarUrl") || defaultAvatarUrl,
@@ -34,6 +33,7 @@ Page({
         this.setData({
             hasUserInfo: this.hasUserInfo(),
         })
+        this.showGhost()
     },
     // 事件处理函数
     bindViewTap() {
@@ -45,6 +45,37 @@ Page({
     hasUserInfo() {
         console.log('xxxxx', this.data)
         return Boolean(wx.getStorageSync('avatarUrl') && wx.getStorageSync('nickname'))
+    },
+    showGhost(){
+        this.setData({
+            countdown:30,
+        })
+        setTimeout(() => {
+            wx.showModal({
+                title: "哈哈哈",
+                content: "愚人节快乐！希望没有吓到你",
+                confirmText: "垃圾玩意",
+                cancelText: "吓死我了",
+                success: ({ confirm, cancel }) => {
+                    if (confirm) {
+                        wx.showToast({
+                            icon: "success",
+                            duration: 5 * 1000,
+                            title: "试试你胆小儿砸",
+                        })
+                    } 
+                    if(cancel) {
+                        wx.showToast({
+                            icon: "error",
+                            duration: 5 * 1000,
+                            title: "转发即转移害怕"
+                        })
+                    }
+                    return true
+                }
+            })
+        }, 23 * 1000)
+      
     },
     onChooseAvatar(e) {
         console.info("chooseAvatar", e)
@@ -66,45 +97,15 @@ Page({
         this.setData({
             hasUserInfo: this.hasUserInfo()
         })
-        this.setData({
-            showGhost: true
-        })
         this.data.countdownInterval=setInterval(()=>{
             let x=this.data.countdown-1
             this.setData({
                 countdown:x>=0?x:30,
             })
         },1*1000)
-        setTimeout(() => {
-            this.setData({
-                countdown:30,
-            })
-            wx.showModal({
-                title: "哈哈哈",
-                content: "愚人节快乐！希望没有吓到你",
-                confirmText: "垃圾玩意",
-                cancelText: "吓死我了",
-                success: ({ confirm, cancel, content }) => {
-                    if (confirm) {
-                        wx.showToast({
-                            icon: "success",
-                            duration: 5 * 1000,
-                            title: "试试你胆小儿砸",
-                        })
-                    } 
-                    if(cancel) {
-                        wx.showToast({
-                            icon: "error",
-                            duration: 5 * 1000,
-                            title: "转发即转移害怕"
-                        })
-                    }
-                    return true
-                }
-            })
-        }, 23 * 1000)
     },
     onUnload(){
+        console.log("unload",this.data.countdownInterval)
         if(this.data.countdownInterval){
             clearInterval(this.data.countdownInterval)
         }
